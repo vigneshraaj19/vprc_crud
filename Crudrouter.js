@@ -40,7 +40,7 @@ Router.get("/getdata",async(req,res)=>{
 Router.post("/createdata",async(req,res)=>{
     try{
         const data=req.body;
-        console.log(req.file.path)
+        console.log(req.body)
     
     const emailExist=await User.findOne({email:req.body.email})
     
