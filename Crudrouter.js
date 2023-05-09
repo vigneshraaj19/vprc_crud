@@ -85,11 +85,13 @@ Router.delete("/deletedata/:_id",async(req,res)=>{
 Router.get("/updatedata/:_id",async(req,res)=>{
 
     try{
+
     const id=req.params._id;
     const o_id=new mongoose.Types.ObjectId(id)
     console.log(o_id)
     const updatedata=await User.findOne({_id:o_id})
-    res.status(200).send({data:updatedata,status:true});
+    console.log(updatedata)
+    res.status(200).send({data:updatedata});
     }
     catch(err){
         res.status(400).send({message:err})
@@ -100,12 +102,15 @@ Router.get("/updatedata/:_id",async(req,res)=>{
 Router.put("/update",async(req,res)=>{
 
     try{
-        const data=req.body;
-        const update=await User.updateOne({email:data.email},{$set:{
-            name:data.name,
-            email:data.email,
-            phone:data.phone,
-            role:data.role,
+        const o_id=new mongoose.Types.ObjectId(req.body._id)
+        console.log(o_id)
+        console.log(req.body)
+        const result=await User.updateOne({_id:o_id},{$set:{
+            name:req.body.name,
+            email:req.body.email,
+            role:req.body.role,
+            phone:req.body.phone,
+    
         }})
         res.status(200).send({message:"updated successfully",status:true});
         }
@@ -114,10 +119,6 @@ Router.put("/update",async(req,res)=>{
         }
     
 })
-
-
-
-
 
 
 module.exports=Router
